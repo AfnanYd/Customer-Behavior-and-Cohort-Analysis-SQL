@@ -32,7 +32,7 @@
 		ORDER BY customer_id
   ) AS unique_customer
 
---Performance Sales & Growth Analysis
+--PERFORMANCE SALES & GROWTH ANALYSIS
 --Bagaimana overall performance GenggamData Store ditahun 2023 untuk jumlah order dan total sales ?
   SELECT 
 		  EXTRACT(MONTH FROM order_date) AS Bulan,
@@ -103,3 +103,163 @@
   	ORDER BY category
   ) AS growth
   ORDER BY category, bulan
+
+--PROMOTIONAL COST EFFICIENCY
+--menghitung burn rate dari promosi yang dilakukan overall berdasarkan bulan.
+	SELECT 
+			Bulan,
+			total_sales,
+			promotional_values,
+			burn_rate
+	FROM
+	(
+		SELECT 
+				EXTRACT(MONTH FROM order_date) AS Bulan,
+				SUM(purchase_amount_usd) AS total_sales,
+				ROUND(SUM(discount/100 * purchase_amount_usd),2) AS promotional_values,
+				ROUND(SUM(discount/100 * purchase_amount_usd) / SUM (purchase_amount_usd)*100,2) AS burn_rate
+		FROM customer_transaction
+		GROUP BY Bulan
+		ORDER BY Bulan ASC
+	) AS PCE
+--Menghitung burn rate dari promosi yang dilakukan overall berdasarkan product category dan bulan
+SELECT 
+		Bulan,
+		category,
+		total_sales,
+		promotional_values,
+		burn_rate
+FROM
+(
+	SELECT 
+			EXTRACT(MONTH FROM order_date) AS Bulan,
+			category,
+			SUM(purchase_amount_usd) AS total_sales,
+			ROUND(SUM(discount/100 * purchase_amount_usd),2) AS promotional_values,
+			ROUND(SUM(discount/100 * purchase_amount_usd) / SUM (purchase_amount_usd)*100,2) AS burn_rate
+	FROM customer_transaction
+	GROUP BY Bulan, category
+	ORDER BY Bulan ASC, category
+) AS PCE
+
+--COHORT ANALYSIS
+WITH first_invoice AS 
+(
+ 	SELECT 
+			customer_id,
+  			MIN(order_date) AS firstinvoice
+ 	FROM customer_transaction
+	GROUP BY customer_id
+ 	ORDER BY firstinvoice
+),
+
+cohort_index AS
+(
+	SELECT 
+		ct.customer_id,
+    	ct.order_date,
+    	fi.firstinvoice,
+    	EXTRACT(MONTH FROM ct.order_date) - EXTRACT(MONTH FROM fi.firstinvoice) AS cohort_index
+	FROM customer_transaction AS ct
+	LEFT JOIN first_invoice as fi
+	ON ct.customer_id = fi.customer_id
+	ORDER BY ct.customer_id, ct.order_date
+),
+
+cohort_month AS 
+(
+	SELECT 
+		EXTRACT(MONTH FROM ci.firstinvoice) AS cohort_month,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 0 THEN ci.customer_id END)::numeric AS m0,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 1 THEN ci.customer_id END)::numeric AS m1,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 2 THEN ci.customer_id END)::numeric AS m2,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 3 THEN ci.customer_id END)::numeric AS m3,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 4 THEN ci.customer_id END)::numeric AS m4,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 5 THEN ci.customer_id END)::numeric AS m5,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 6 THEN ci.customer_id END)::numeric AS m6,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 7 THEN ci.customer_id END)::numeric AS m7,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 8 THEN ci.customer_id END)::numeric AS m8,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 9 THEN ci.customer_id END)::numeric AS m9,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 10 THEN ci.customer_id END)::numeric AS m10,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 11 THEN ci.customer_id END)::numeric AS m11
+	FROM cohort_index AS ci
+	GROUP BY cohort_month
+	ORDER BY cohort_month
+)
+
+SELECT 
+	cm.cohort_month,
+    ROUND((cm.m0/cm.m0)*100) AS m0,
+    ROUND((cm.m1/cm.m0)*100) AS m1,
+    ROUND((cm.m2/cm.m0)*100) AS m2,
+    ROUND((cm.m3/cm.m0)*100) AS m3,
+    ROUND((cm.m4/cm.m0)*100) AS m4,
+    ROUND((cm.m5/cm.m0)*100) AS m5,
+    ROUND((cm.m6/cm.m0)*100) AS m6,
+    ROUND((cm.m7/cm.m0)*100) AS m7,
+    ROUND((cm.m8/cm.m0)*100) AS m8,
+    ROUND((cm.m9/cm.m0)*100) AS m9,
+    ROUND((cm.m10/cm.m0)*100) AS m10,
+    ROUND((cm.m11/cm.m0)*100) AS m11
+FROM cohort_month AS cm
+
+--CHURN RATE
+WITH first_invoice AS 
+(
+	SELECT 
+		customer_id,
+   		MIN(order_date) AS firstinvoice
+ 	FROM customer_transaction
+ 	GROUP BY customer_id
+ 	ORDER BY firstinvoice
+),
+
+cohort_index AS
+(
+	SELECT 
+		ct.customer_id,
+    	ct.order_date,
+    	fi.firstinvoice,
+    	EXTRACT(MONTH FROM ct.order_date) - EXTRACT(MONTH FROM fi.firstinvoice) AS cohort_index
+	FROM customer_transaction AS ct
+	LEFT JOIN first_invoice as fi
+	ON ct.customer_id = fi.customer_id
+	ORDER BY ct.customer_id, ct.order_date
+),
+
+cohort_month AS 
+(
+	SELECT 
+		EXTRACT(MONTH FROM ci.firstinvoice) AS cohort_month,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 0 THEN ci.customer_id END)::numeric AS m0,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 1 THEN ci.customer_id END)::numeric AS m1,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 2 THEN ci.customer_id END)::numeric AS m2,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 3 THEN ci.customer_id END)::numeric AS m3,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 4 THEN ci.customer_id END)::numeric AS m4,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 5 THEN ci.customer_id END)::numeric AS m5,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 6 THEN ci.customer_id END)::numeric AS m6,
+   	 	COUNT(DISTINCT CASE WHEN ci.cohort_index = 7 THEN ci.customer_id END)::numeric AS m7,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 8 THEN ci.customer_id END)::numeric AS m8,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 9 THEN ci.customer_id END)::numeric AS m9,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 10 THEN ci.customer_id END)::numeric AS m10,
+    	COUNT(DISTINCT CASE WHEN ci.cohort_index = 11 THEN ci.customer_id END)::numeric AS m11
+	FROM cohort_index AS ci
+	GROUP BY cohort_month
+	ORDER BY cohort_month
+)
+
+SELECT 
+	cm.cohort_month,
+    100 - ROUND(((cm.m0)/cm.m0)*100) AS m0,
+    100 - ROUND(((cm.m1)/cm.m0)*100) AS m1,
+    100 - ROUND(((cm.m2)/cm.m0)*100) AS m2,
+    100 - ROUND(((cm.m3)/cm.m0)*100) AS m3,
+    100 - ROUND(((cm.m4)/cm.m0)*100) AS m4,
+    100 - ROUND(((cm.m5)/cm.m0)*100) AS m5,
+    100 - ROUND(((cm.m6)/cm.m0)*100) AS m6,
+    100 - ROUND(((cm.m7)/cm.m0)*100) AS m7,
+    100 - ROUND(((cm.m8)/cm.m0)*100) AS m8,
+    100 - ROUND(((cm.m9)/cm.m0)*100) AS m9,
+    100 - ROUND(((cm.m10)/cm.m0)*100) AS m10,
+    100 - ROUND(((cm.m11)/cm.m0)*100) AS m11
+FROM cohort_month AS cm

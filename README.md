@@ -1,92 +1,88 @@
-# 🛒 E-Commerce Customer Behavior & Cohort Retention Analysis (SQL Project)
+# Analisis Perilaku Konsumen & Retensi Pelanggan E-Commerce (Proyek SQL)
 
-Welcome to the **Customer Behavior and Shopping Habits** analysis project! This repository contains the complete PostgreSQL scripts and business insights derived from analyzing transaction data in 2023. This project was developed as the Final Project for the **Master SQL for Data Analyst Bootcamp** by Genggam Data.
-
----
-
-## 📌 Project Overview & Objectives
-As a Data Analyst, the objective of this project is to support the **Marketing, Growth, and Business Development** teams by providing data-driven recommendations to optimize sales, evaluate promotional efficiency, and understand customer retention challenges.
-
-The project is structured into **5 main analysis scopes**:
-1. **Descriptive Analysis** — Fundamental health metrics of the storefront.
-2. **Performance Sales & Growth Analysis** — Identifying monthly sales trends and category growth dynamics.
-3. **Promotional Cost Efficiency Analysis** — Tracking marketing spend effectiveness (Burn Rate) against the corporate 43% ceiling.
-4. **Customer Retention (Cohort) Analysis** — Assessing customer lifecycle and long-term brand loyalty.
-5. **Customer Behavior Analysis** — Segmenting preferences by demographic (gender) and testing rating correlations.
+Selamat datang di proyek analisis **Customer Behavior and Shopping Habits**! Repositori ini berisi skrip PostgreSQL lengkap dan wawasan bisnis yang dihasilkan dari analisis data transaksi sepanjang tahun 2023. Proyek ini disusun sebagai *Final Project* untuk **Bootcamp Master SQL for Data Analyst** oleh Genggam Data.
 
 ---
 
-## 📊 Executive Summary & Key Business Insights
+## Ringkasan & Tujuan Proyek
+Sebagai seorang Data Analyst, tujuan dari proyek ini adalah untuk mendukung tim **Marketing, Growth, dan Business Development** dalam memberikan rekomendasi berbasis data guna mengoptimalkan penjualan, mengevaluasi efisiensi biaya promosi, serta memahami tantangan retensi pelanggan.
 
-* 📉 **The Retention Challenge:** Our Cohort Analysis reveals a critical drop-off in customer loyalty. On average, **over 50% of new customers churn after their very first month**. Acquiring customers is expensive; we must shift our focus to post-purchase loyalty programs or targeted re-engagement campaigns.
-* 🚨 **Promotional Overspending:** In the first half of 2023, promotional efficiency was severely compromised. Monthly **burn rates peaked in June at 47.16%**, continuously breaching management's maximum threshold of **43%**. Fortunately, tighter targeting strategies in Q4 brought spending back to an efficient 43.35% by December.
-* 🛍️ **Gender-Targeted Campaigns:** Cross-gender data identifies *Pants* and *Jewelry* as universally strong sellers. However, to maximize ROI on marketing campaigns, the team should specifically target **Male audiences for *Coat* and *Sweater***, and **Female audiences for *Blouse* and *Sandals***.
-* 🔄 **Sales Fluctuation & Peak Season:** Overall revenue is highly volatile, hitting its lowest point in June ($9,451.20) but skyrocketing to its absolute annual peak in **October ($12,303.98)**. 
-* 🚫 **The Rating Paradox:** A Pearson Correlation test between product review ratings and total purchase volumes yielded **$r = -0.00038$**. This statistically proves that customer purchasing decisions are completely independent of review scores, meaning other factors like pricing, seasonal urgency, or promotions drive the volume.
-
----
-
-## 🛠️ Tech Stack & Dataset
-* **Database Management System:** PostgreSQL (via DBeaver / pgAdmin)
-* **Visualization Tools:** Google Sheets / Microsoft Excel
-* **Core SQL Features Used:** Common Table Expressions (CTEs), Window Functions (`LAG()`, `ROW_NUMBER()`), Aggregations (`SUM`, `COUNT DISTINCT`), Date Extractions (`EXTRACT`).
-* **Dataset:** *Customer Behavior and Shopping Habits 2023* (3,900 rows, 551 unique customers).
+Proyek ini terbagi menjadi **5 cakupan analisis utama**:
+1. **Descriptive Analysis** — Gambaran umum performa toko.
+2. **Performance Sales & Growth Analysis** — Mengidentifikasi tren penjualan bulanan dan dinamika pertumbuhan kategori produk.
+3. **Promotional Cost Efficiency Analysis** — Memantau efektivitas biaya promosi (*Burn Rate*) terhadap batas maksimum perusahaan (43%).
+4. **Customer Retention (Cohort) Analysis** — Menilai retensi pelanggan dan tingkat *churn* antar-periode.
+5. **Customer Behavior Analysis** — Menganalisis preferensi produk berdasarkan demografi (gender) dan menguji korelasi rating review.
 
 ---
 
-## 🔍 Deep-Dive Analysis Breakdown
+## _Summary_ & _Main Business Insight_
 
-### 1. Descriptive Analysis (2023 Store Overview)
-A basic exploration to quantify the storefront scale in 2023:
-* **Total Transactions:** 3,900 orders
-* **Unique Customers:** 551 active shoppers
-* **Total Adjusted Revenue:** \$128,673.73 *(calculated net of discounts applied)*
-* **Product Variety:** 4 main categories containing 25 unique items.
-* **Average Shopper Age:** 23.96 years old *(highly skewed towards Gen-Z and Millennials)*
+* **Tantangan Retensi Pelanggan:** Hasil *Cohort Analysis* menunjukkan penurunan drastis pada loyalitas pelanggan. Rata-rata **lebih dari 50% pelanggan baru berhenti melakukan pembelian (*churn*) setelah bulan pertama**. Fokus bisnis harus digeser ke program loyalitas pasca-pembelian pertama.
+* **Pengeluaran Promosi Berlebih (*Burn Rate*):** Pada semester pertama 2023, efisiensi promosi berada di tingkat yang merugikan. ***Burn rate* tertinggi terjadi pada bulan Juni sebesar 47,16%**, melampaui batas maksimum manajemen sebesar **43%**. Pengendalian promosi baru membaik pada bulan Desember (43,35%).
+* **Kampanye Iklan Berbasis Gender:** Produk *Pants*, *Blouse*, dan *Jewelry* merupakan barang yang paling sering dibeli secara umum (masing-masing 171 kali transaksi). Namun untuk efisiensi iklan, tim pemasaran disarankan menargetkan **audiens Pria untuk produk *Pants*, *Jewelry*, dan *Coat***, serta **audiens Wanita untuk produk *Blouse*, *Sandals*, dan *Shirt***.
+* **Fluktuasi Penjualan & Peak Season:** Performa pendapatan cukup fluktuatif sepanjang tahun. Penjualan terendah terjadi pada bulan Juni ($9.451,20), sedangkan puncak penjualan (*peak season*) berhasil dicapai pada **Oktober ($12.303,98)**.
+* **Paradoks Rating Review:** Pengujian korelasi Pearson antara *rating review* dan total jumlah pembelian menghasilkan nilai **$r = -0,00038$**. Hal ini membuktikan secara statistik bahwa keputusan pembelian pelanggan tidak dipengaruhi oleh nilai rating review.
+
+---
+
+## Tools & Dataset yang Digunakan
+* **Database Management System:** PostgreSQL (via pgAdmin)
+* **Alat Visualisasi:** Microsoft Excel / Google Sheets
+* **Fitur Utama SQL:** Common Table Expressions (CTE), Window Functions (`LAG()`, `ROW_NUMBER()`), Agregasi (`SUM`, `COUNT DISTINCT`), Date Extractions (`EXTRACT`).
+* **Dataset:** *Customer Behavior and Shopping Habits 2023* (3.900 baris transaksi, 551 _Unique Customers_).
+
+---
+
+## Detail Analisis
+
+### 1. Descriptive Analysis (Gambaran Umum 2023)
+* **Total Transaksi:** 3.900 transaksi
+* **Jumlah Customer Unik:** 551 pelanggan
+* **Total Pendapatan (Revenue):** \$128.673,73 *(setelah pemotongan diskon)*
+* **Variasi Produk:** 4 kategori produk (25 jenis produk unik)
+* **Rata-rata Usia Customer:** 23,96 tahun
 
 ### 2. Performance Sales & Growth Analysis
-Monthly metrics indicate sharp seasonal behaviors. Growth rates were calculated using the standard formula:
-$$\text{Growth Percentage} = \left( \frac{\text{Current Month}}{\text{Previous Month}} - 1 \right) \times 100$$
+Formula pertumbuhan yang digunakan:
+$$\text{Growth Percentage} = \left( \frac{\text{Order/Sales Periode Ini}}{\text{Order/Sales Periode Sebelumnya}} - 1 \right) \times 100$$
 
-* **High Performance Months:** October (+9.85% Order Growth) and March (+13.13% Order Growth).
-* **Low Performance Months:** June saw a steep decline of -13.06% in transactions, highly correlating with our worst promotional overspend.
+* **Bulan Performa Tinggi:** Bulan Maret (+13,13% Growth Order) dan Oktober (+9,85% Growth Order).
+* **Bulan Performa Terendah:** Bulan Juni mengalami penurunan transaksi sebesar -13,06%, berbanding lurus dengan tingkat *burn rate* promosi tertinggi.
 
 ### 3. Promotional Cost Efficiency Analysis
-Management set a strict rule: **The Burn Rate must not exceed 43%**. 
-$$\text{Burn Rate} = \left( \frac{\text{Total Discount Value (USD)}}{\text{Total Gross Sales (USD)}} \right) \times 100$$
+Batas maksimum *burn rate* yang ditetapkan manajemen adalah **43%**.
+$$\text{Burn Rate} = \left( \frac{\text{Total Nilai Diskon (USD)}}{\text{Total Sales Gross (USD)}} \right) \times 100$$
 
-| Month | Total Sales ($) | Promotional Value ($) | Burn Rate (%) | Status |
+| Bulan | Total Sales ($) | Nilai Promosi ($) | Burn Rate (%) | Status |
 |---|---|---|---|---|
-| January | 19,547 | 8,677.53 | 44.39% | 🔴 Exceeded |
-| June | 17,740 | 8,366.08 | **47.16%** | 🔴 Critical Overspend |
-| October | 21,792 | 9,488.02 | 43.54% | 🟡 Near Limit |
-| December | 18,725 | 8,116.82 | **43.35%** | green_circle: Optimal Control |
-
-* **Takeaway:** The promotional strategy was highly inefficient for 9 out of 12 months. Sales did not scale proportionally to the deep discount cuts given out mid-year.
+| Januari | 19.547 | 8.677,53 | 44,39% | 🔴 Melebihi Batas |
+| Juni | 17.740 | 8.366,08 | **47,16%** | 🔴 *Jauh Melebihi Batas* |
+| Oktober | 21.792 | 9.488,02 | 43,54% | 🟡 Mendekati Batas |
+| Desember | 18.725 | 8.116,82 | **43,35%** | 🟢 Mendekati Target |
 
 ### 4. Customer Retention Analysis (Cohort Framework)
-By establishing the month of a customer's first purchase as their cohort group, we tracked their recurring transactions over an 11-month index window.
-* **Retention Rate (%)** reflects high initial dropouts. Customers entering in January (Cohort 1) show a month-1 retention of 43%. While it slightly bounces back in later months due to holiday seasons, losing 57% of customers immediately indicates low post-purchase engagement.
-* **Churn Rate Analysis** confirms that over the entire year, average churn immediately hovers above 50% for almost every cohort. 
+* **Retention Rate (%):** Pelanggan yang bergabung di bulan Januari (Cohort 1) hanya menyisakan 43% pelanggan aktif di bulan kedua (m1).
+* **Churn Rate (%):** Rata-rata tingkat *churn* di hampir semua kelompok bulan berada di atas 50% setelah bulan pertama, mengindikasikan bahwa mayoritas pelanggan hanya bertransaksi satu kali.
 
 ### 5. Customer Behavior & Preferences
-* **Top 3 Most Frequently Purchased Items:** *Pants*, *Blouse*, and *Jewelry* (tied at 171 sales each).
-* **Demographic Preference Rank:**
-  * **Male Top 3:** Pants ➡️ Jewelry ➡️ Coat
-  * **Female Top 3:** Blouse ➡️ Sandals ➡️ Shirt
-* **Statistical Analysis:** The Pearson Correlation value of **-0.00038** implies zero linear correlation. Poorly rated items sell just as frequently as 5-star items, emphasizing that the brand's target audience is highly price-sensitive rather than quality-review focused.
+* **3 Produk Paling Laris:** *Pants*, *Blouse*, dan *Jewelry* (masing-masing 171 kali pembelian).
+* **Peringkat Preferensi Gender:**
+  * **Pria (Male):** Pants ➡️ Jewelry ➡️ Coat
+  * **Wanita (Female):** Blouse ➡️ Sandals ➡️ Shirt
+* **Penggunaan Diskon:** Sebanyak 3.883 dari total 3.900 transaksi menggunakan diskon aplikasi.
 
 ---
 
-## 📈 Strategic Business Recommendations
+## Rekomendasi Strategis untuk Bisnis
 
-1. **Implement a Customer Loyalty Program:** Address the 50%+ churn rate immediately. Introduce a points-based system or offer an exclusive voucher specifically for a customer's *second* purchase to bridge the gap between Month 0 and Month 1.
-2. **Revamp Promotional Allocation:** Drop the generalized, heavy discounting patterns seen in Q2 (June). Transition towards personalized, behavior-based targeted discounts (e.g., automated email discounts on birthdays or specific item restocking notifications).
-3. **Hyper-Personalized Marketing Assets:** Sync social media and ad copy with the demographic preferences matrix. Automate web banners so that male users are greeted with coats and sweaters, while female users see blouse and sandal collections first.
+1. **Program Retensi Pelanggan:** Atasi *churn rate* yang mencapai >50% dengan memberikan voucher khusus pembelian kedua (*second-purchase incentive*) untuk mendorong *repeat order*.
+2. **Evaluasi Alokasi Promosi:** Kurangi pemberian diskon umum pada pertengahan tahun (khususnya bulan Juni) dan alihkan ke promosi berbasis segmentasi perilaku pelanggan.
+3. **Personalisasi Iklan Digital:** Sesuaikan materi iklan dengan preferensi gender—tampilkan koleksi *Coat* dan *Pants* untuk pengguna pria, serta *Blouse* dan *Sandals* untuk pengguna wanita.
 
 ---
 
-## 📁 Repository Structure
+## Struktur Repositori
 ```bash
-├── Script.sql          # Full PostgreSQL code containing all sections neatly structured
-└── README.md           # Business context, graphs, and executive project overview
+├── Script.sql          # Kode PostgreSQL lengkap yang terstruktur rapi
+└── README.md           # Dokumentasi analisis dan rekomendasi bisnis

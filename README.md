@@ -1,4 +1,4 @@
-# Analisis Perilaku Konsumen & Retensi Pelanggan E-Commerce (Proyek SQL)
+# Analisis Perilaku Konsumen & Retensi Pelanggan Genggamdata Store (Proyek SQL)
 
 Selamat datang di proyek analisis **Customer Behavior and Shopping Habits**! Repositori ini berisi skrip PostgreSQL lengkap dan wawasan bisnis yang dihasilkan dari analisis data transaksi sepanjang tahun 2023. Proyek ini disusun sebagai *Final Project* untuk **Bootcamp Master SQL for Data Analyst** oleh Genggam Data.
 

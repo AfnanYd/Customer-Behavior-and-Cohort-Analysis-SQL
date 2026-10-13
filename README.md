@@ -47,7 +47,7 @@ Proyek ini terbagi menjadi **5 cakupan analisis utama**:
 Formula pertumbuhan yang digunakan:
 $$\text{Growth Percentage} = \left( \frac{\text{Order/Sales Periode Ini}}{\text{Order/Sales Periode Sebelumnya}} - 1 \right) \times 100$$
 
-* **Bulan Performa Tinggi:** Bulan Maret (+13,13% Growth Order) dan Oktober (+9,85% Growth Order).
+* **Bulan Performa Tinggi:** Bulan Maret (+13,13% Growth Order) dan Juli (+12,29% Growth Order).
 * **Bulan Performa Terendah:** Bulan Juni mengalami penurunan transaksi sebesar -13,06%, berbanding lurus dengan tingkat *burn rate* promosi tertinggi.
 
 ### 3. Promotional Cost Efficiency Analysis
@@ -57,9 +57,9 @@ $$\text{Burn Rate} = \left( \frac{\text{Total Nilai Diskon (USD)}}{\text{Total S
 | Bulan | Total Sales ($) | Nilai Promosi ($) | Burn Rate (%) | Status |
 |---|---|---|---|---|
 | Januari | 19.547 | 8.677,53 | 44,39% | 🔴 Melebihi Batas |
+| Maret | 21.587 | 81410,95 | 42,94% | 🟢 Mendekati Batas |
 | Juni | 17.740 | 8.366,08 | **47,16%** | 🔴 *Jauh Melebihi Batas* |
-| Oktober | 21.792 | 9.488,02 | 43,54% | 🟡 Mendekati Batas |
-| Desember | 18.725 | 8.116,82 | **43,35%** | 🟢 Mendekati Target |
+| Desember | 18.725 | 8.116,82 | **43,35%** | 🟡 Mendekati Target |
 
 ### 4. Customer Retention Analysis (Cohort Framework)
 * **Retention Rate (%):** Pelanggan yang bergabung di bulan Januari (Cohort 1) hanya menyisakan 43% pelanggan aktif di bulan kedua (m1).

@@ -1,4 +1,4 @@
--- Project: E-Commerce Customer Behavior & Cohort Analysis
+-- Project: Genggamdata Store Customer Behavior & Cohort Analysis
 -- Database System: PostgreSQL
 -- Table Name: customer_transaction
 
